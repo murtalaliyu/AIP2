@@ -20,18 +20,24 @@ public class Map {
 			for (int j = 0; j < map.length; j++) {
 				Random r = new Random();
 				int random = r.nextInt(4) + 1;
-				System.out.println("random: " + random + ", map[i][j] = " + i+j);
 				if (random == 1) {
 					map[i][j].status = "FL";
+					System.out.print(map[i][j].status + "   ");
 				} else if (random == 2) {
 					map[i][j].status = "HI";
+					System.out.print(map[i][j].status + "   ");
 				} else if (random == 3) {
 					map[i][j].status = "FO";
+					System.out.print(map[i][j].status + "   ");
 				} else if (random == 4) {
-					map[i][j].status = "CM";
+					map[i][j].status = "MC";
+					System.out.print(map[i][j].status + "   ");
 				}
 			}
+			System.out.println();
 		}
+		System.out.println();
+		placeTarget(map);
 		return map;
 	}
 	
@@ -43,7 +49,16 @@ public class Map {
 		return map;
 	}
 
-	public static void printMap(Node[][] map) {
+	public static void printIerrain(Node[][] map) {
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map.length; j++) {
+				System.out.print(map[i][j].status + "   ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void printTarget(Node[][] map) {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map.length; j++) {
 				System.out.print(map[i][j].target + "   ");

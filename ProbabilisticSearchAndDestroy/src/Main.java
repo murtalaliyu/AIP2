@@ -7,10 +7,11 @@ public class Main {
 		Node[][] map = new Node[length][length];
 		
 		map = Map.makeMap(map);
-		Map.printMap(map);
+		//Map.printMap(map);
 		map = Map.makeTerrain(map);
-		Map.printMap(map);
+		//Map.printMap(map);
 		map = Map.placeTarget(map);
-		Map.printMap(map);
+		System.out.println();
+		Map.printTarget(map);
 	}
 }
