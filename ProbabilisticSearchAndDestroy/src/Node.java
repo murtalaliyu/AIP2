@@ -1,4 +1,3 @@
-
 public class Node {
 
 	Node right;
@@ -13,7 +12,7 @@ public class Node {
 		this.right = right;
 		this.bottom = bottom;
 		this.top = top;
-		this.right = right;
+		this.left = left;
 		this.target = target;
 		this.status = status;
 	}
