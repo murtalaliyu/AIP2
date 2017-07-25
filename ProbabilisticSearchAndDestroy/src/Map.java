@@ -70,7 +70,11 @@ public class Map {
 	public static void printTarget(Node[][] map, int row, int col) {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				System.out.print(map[i][j].target + "   ");
+				if (map[i][j].target == true) {
+					System.out.print(map[i][j].target + "    ");
+				} else {
+					System.out.print(map[i][j].target + "   ");
+				}
 			}
 			System.out.println();
 		}
