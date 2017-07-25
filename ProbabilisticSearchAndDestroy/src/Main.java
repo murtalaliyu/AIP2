@@ -25,5 +25,7 @@ public class Main {
 		Map.printTerrain(map, row, col);
 		map = Map.placeTarget(map, row, col);
 		Map.printTarget(map, row, col);
+		map = Map.assignNeighbors(map, row, col);
+		//print map with each node's neighbors
 	}
 }

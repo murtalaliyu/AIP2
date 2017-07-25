@@ -4,7 +4,7 @@ public class Map {
 	
 	public static Node[][] makeMap(Node[][] map, int row, int col) {
 		Node temp = null;
-		Node node = new Node(temp,temp,temp,temp,false,"0");
+		Node node = new Node(temp,temp,temp,temp,false,"-");
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				map[i][j] = node;
@@ -54,6 +54,13 @@ public class Map {
 	
 	//ASSIGN NEIGHBORS HERE
 	public static Node[][] assignNeighbors(Node[][] map, int row, int col) {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if () {
+					
+				}
+			}
+		}
 		return map;
 	}
 
@@ -71,9 +78,9 @@ public class Map {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (map[i][j].target == true) {
-					System.out.print(map[i][j].target + "    ");
+					System.out.print("TR" + "   ");
 				} else {
-					System.out.print(map[i][j].target + "   ");
+					System.out.print("FA" + "   ");
 				}
 			}
 			System.out.println();
