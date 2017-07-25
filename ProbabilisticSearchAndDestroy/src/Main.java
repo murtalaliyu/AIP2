@@ -6,9 +6,6 @@ import java.util.*;
 
 public class Main {
 	
-	/*
-	 * Main
-	 */
 	static int row = 0;
 	static int col = 0;
 	static Scanner input = new Scanner(System.in);
@@ -23,6 +20,7 @@ public class Main {
 		Node[][] map = new Node[row][col];
 		
 		map = Map.makeMap(map, row, col);
+		//Map.printTerrain(map, row, col);
 		map = Map.makeTerrain(map, row, col);
 		Map.printTerrain(map, row, col);
 		map = Map.placeTarget(map, row, col);
