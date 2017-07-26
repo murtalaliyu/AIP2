@@ -1,14 +1,13 @@
 public class Node {
 
-	Node right;
-	Node bottom;
-	Node top;
-	Node left;
+	boolean right;
+	boolean bottom;
+	boolean top;
+	boolean left;
 	boolean target;
 	String status;
 	
-	public Node(Node right, Node bottom, Node top, Node left, boolean target, String status) {
-		
+	public Node(boolean right, boolean bottom, boolean top, boolean left, boolean target, String status) {
 		this.right = right;
 		this.bottom = bottom;
 		this.top = top;

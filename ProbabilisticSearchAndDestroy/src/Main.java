@@ -26,6 +26,7 @@ public class Main {
 		map = Map.placeTarget(map, row, col);
 		Map.printTarget(map, row, col);
 		map = Map.assignNeighbors(map, row, col);
-		//print map with each node's neighbors
+		//Map.printNeighborsValidity(map, row, col);
+		//System.out.println(Neighbors.isValidBottomNeighbor(map[0][0]));
 	}
 }
