@@ -7,9 +7,13 @@ public class Cell {
 	boolean target;
 	String status;
 	double priorBelief;
+	double falseNegative;
 	double falsePositive;
+	double currentBelief;
 	
-	public Cell(boolean right, boolean bottom, boolean top, boolean left, boolean target, String status, double priorBelief, double falsePositive) {
+	public Cell(boolean right, boolean bottom, boolean top, boolean left,
+		boolean target, String status, double priorBelief, double falseNegative,
+		double falsePositive, double currentBelief) {
 		this.right = right;
 		this.bottom = bottom;
 		this.top = top;
@@ -17,6 +21,8 @@ public class Cell {
 		this.target = target;
 		this.status = status;
 		this.priorBelief = priorBelief;
+		this.falseNegative = falseNegative;
 		this.falsePositive = falsePositive;
+		this.currentBelief = currentBelief;
 	}
 }
