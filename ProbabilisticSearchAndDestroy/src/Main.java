@@ -17,8 +17,9 @@ public class Main {
 		col = input.nextInt();
 		System.out.println();
 		
-		Node[][] map = new Node[row][col];
+		Cell[][] map = new Cell[row][col];
 		
+		//MAP LOGISTICS
 		map = Map.makeMap(map, row, col);
 		//Map.printTerrain(map, row, col);
 		map = Map.makeTerrain(map, row, col);
@@ -27,6 +28,11 @@ public class Main {
 		Map.printTarget(map, row, col);
 		map = Map.assignNeighbors(map, row, col);
 		//Map.printNeighborsValidity(map, row, col);
-		//System.out.println(Neighbors.isValidBottomNeighbor(map[0][0]));
+		
+		//PROBABILITIES
+		map = Probabilities.pOfTargetInCelli(map, row, col);
+		System.out.println("P(Target in Celli) = " + Probabilities.priorBelief 
+		+ "  <--- This represents our prior belief about where the target is" + "\n");
+		Probabilities.printPriorBelief(map, row, col);
 	}
 }

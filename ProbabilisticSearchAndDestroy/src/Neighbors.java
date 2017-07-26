@@ -1,6 +1,6 @@
 public class Neighbors {
 
-	public static Node[][] assignNeighbors(Node[][] map, int row, int col) {
+	public static Cell[][] assignNeighbors(Cell[][] map, int row, int col) {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (i == 0 && j == 0) {					//top left cell
@@ -42,29 +42,29 @@ public class Neighbors {
 		return map;
 	}
 	
-	public static boolean isValidRightNeighbor(Node node) {
-		if (node.right) {
+	public static boolean isValidRightNeighbor(Cell cell) {
+		if (cell.right) {
 			return true;
 		}
 		return false;
 	}
 	
-	public static boolean isValidBottomNeighbor(Node node) {
-		if (node.bottom) {
+	public static boolean isValidBottomNeighbor(Cell cell) {
+		if (cell.bottom) {
 			return true;
 		}
 		return false;
 	}
 	
-	public static boolean isValidTopNeighbor(Node node) {
-		if (node.top) {
+	public static boolean isValidTopNeighbor(Cell cell) {
+		if (cell.top) {
 			return true;
 		}
 		return false;
 	}
 	
-	public static boolean isValidLeftNeighbor(Node node) {
-		if (node.left) {
+	public static boolean isValidLeftNeighbor(Cell cell) {
+		if (cell.left) {
 			return true;
 		}
 		return false;
