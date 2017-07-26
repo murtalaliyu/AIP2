@@ -1,5 +1,5 @@
 /*
- * 1. node.status should be regarded basically as node."terrainType"
+ * 1. node.status should be regarded as node."terrainType"
  */
 
 import java.util.*;
@@ -9,6 +9,7 @@ public class Main {
 	static int row = 0;
 	static int col = 0;
 	static Scanner input = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 
 		System.out.println("Size of map: (enter row size, the column size)");
