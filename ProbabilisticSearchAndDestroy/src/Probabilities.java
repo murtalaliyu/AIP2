@@ -42,7 +42,7 @@ public class Probabilities {
 		return map;
 	}
 	
-	//ASSIGN CURRENT BELIEF <-- incomplete
+	//ASSIGN CURRENT BELIEF Belief[Celli] = P(Target In Celli | Observations Through Time t) <-- incomplete
 	public static Cell[][] currentBelief(Cell[][] map) {
 		return map;
 	}

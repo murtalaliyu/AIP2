@@ -1,5 +1,6 @@
 public class Neighbors {
 
+	//ERROR: does not account for maps like 3x1. use instanceof instead to do checking
 	public static Cell[][] assignNeighbors(Cell[][] map) {
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
