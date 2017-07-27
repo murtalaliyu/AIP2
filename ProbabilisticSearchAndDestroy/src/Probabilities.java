@@ -43,8 +43,13 @@ public class Probabilities {
 	}
 	
 	//ASSIGN CURRENT BELIEF Belief[Celli] = P(Target In Celli | Observations Through Time t) <-- incomplete
+	//ERROR
 	public static Cell[][] currentBelief(Cell[][] map) {
-		
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				map[i][j].currentBelief = map[i][j].priorBelief;
+			}
+		}
 		return map;
 	}
 	
@@ -84,9 +89,15 @@ public class Probabilities {
 		System.out.println();
 	}
 	
-	//PRINT CURRENT BELIEF <-- incomplete
+	//PRINT CURRENT BELIEF
 	public static void printCurrentBelief(Cell[][] map) {
 		System.out.println("Current belief: ");
-		
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				System.out.print(map[i][j].currentBelief + "   ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 }

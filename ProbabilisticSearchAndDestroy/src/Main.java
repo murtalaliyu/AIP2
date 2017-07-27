@@ -40,5 +40,13 @@ public class Main {
 		map = Probabilities.falsePositive(map);
 		Probabilities.printFalsePositive(map);
 		
+		//TEST AFTER THIS LINE.............................
+		map = Probabilities.currentBelief(map);
+		double prior = map[0][1].currentBelief;
+		double current = 0.2;
+		map[0][1].currentBelief = current;
+		
+		map = Normalize.normalizeMap(map, map[0][1], prior, current);
+		Probabilities.printCurrentBelief(map);
 	}
 }
