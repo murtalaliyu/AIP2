@@ -1,41 +1,19 @@
 public class Neighbors {
 
-	//ERROR: does not account for maps like 3x1. use instanceof instead to do checking
+	//ASSIGN NEIGHBORS
 	public static Cell[][] assignNeighbors(Cell[][] map) {
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				if (i == 0 && j == 0) {								//top left cell
+				if (j+1 < Main.col) {
 					map[i][j].right = true;
+				} 
+				if (i+1 < Main.row) {
 					map[i][j].bottom = true;
-				} else if (i == 0 && j == Main.col-1) {				//top right cell
-					map[i][j].bottom = true;
-					map[i][j].left = true;
-				} else if (i == Main.row-1 && j == 0) {				//bottom left cell
+				}
+				if (i-1 >= 0) {
 					map[i][j].top = true;
-					map[i][j].right = true;
-				} else if (i == Main.row-1 && j == Main.col-1) {	//bottom right cell
-					map[i][j].top = true;
-					map[i][j].left = true;
-				} else if (i == 0 & j < Main.col-1) {				//top cell
-					map[i][j].bottom = true;
-					map[i][j].right = true;
-					map[i][j].left = true;
-				} else if (i < Main.row-1 && j == Main.col-1) {		//right cell
-					map[i][j].bottom = true;
-					map[i][j].top = true;
-					map[i][j].left = true;
-				} else if (i == Main.row-1 && j < Main.col-1) {		//bottom cell
-					map[i][j].top = true;
-					map[i][j].right = true;
-					map[i][j].left = true;
-				} else if (i < Main.row-1 && j == 0) {				//left cell
-					map[i][j].right = true;
-					map[i][j].top = true;
-					map[i][j].bottom = true;
-				} else {											//middle cell
-					map[i][j].right = true;
-					map[i][j].bottom = true;
-					map[i][j].top = true;
+				}
+				if (j-1 >= 0) {
 					map[i][j].left = true;
 				}
 			}
