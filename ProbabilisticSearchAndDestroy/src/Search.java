@@ -44,7 +44,7 @@ public class Search {
 	public static boolean searchMaze(Cell cell) {
 		Random r = new Random();
 		int random = r.nextInt(10) + 1;
-		if (random >= 1 && random <= 9) {
+		if (random != 10) {
 			return false;
 		} else if (random > 9 && cell.target == false) {
 			return false;

@@ -2,7 +2,7 @@
  * 1. node.status should be regarded as node."terrainType"
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
 	
