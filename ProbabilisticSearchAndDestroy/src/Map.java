@@ -4,7 +4,7 @@ public class Map {
 	
 	//GENERATE EMPTY MAP
 	public static Cell[][] makeMap(Cell[][] map) {
-		Cell cell = new Cell(false,false,false,false,false,"-",0,0,0,0);
+		Cell cell = new Cell(false,false,false,false,false,"-",0,0,0,0,0);
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
 				map[i][j] = cell;
@@ -20,19 +20,19 @@ public class Map {
 				Random r = new Random();
 				int random = r.nextInt(4) + 1;
 				if (random == 1) {
-					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0);
+					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0,0);
 					cell.status = "FL";
 					map[i][j] = cell;
 				} else if (random == 2) {
-					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0);
+					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0,0);
 					cell.status = "HI";
 					map[i][j] = cell;
 				} else if (random == 3) {
-					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0);
+					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0,0);
 					cell.status = "FO";
 					map[i][j] = cell;
 				} else if (random == 4) {
-					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0);
+					Cell cell = new Cell(false,false,false,false,false,"0",0,0,0,0,0);
 					cell.status = "CM";
 					map[i][j] = cell;
 				}

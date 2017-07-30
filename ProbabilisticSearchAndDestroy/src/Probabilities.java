@@ -1,6 +1,7 @@
 public class Probabilities {
-
+	
 	static double priorBelief = 0;
+	static double observations = 1;
 	
 	//ASSIGN FALSE POSITIVE P(Target Found In Celli | Target Not In Celli) <-- this is always 0 for all cells
 	public static Cell[][] falsePositive(Cell[][] map) {
@@ -43,14 +44,39 @@ public class Probabilities {
 		return map;
 	}
 	
-	//ASSIGN CURRENT BELIEF Belief[Celli] = P(Target In Celli | Observations Through Time t) <-- incomplete
-	//ERROR
-	public static Cell[][] currentBelief(Cell[][] map) {
+	//UPDATE OBSERVATIONS 
+	public static double updateObservation(Cell cell) {
+		observations = observations * cell.falseNegative;
+		return observations;
+	}
+	
+	//P(fail j | obs_t)
+	public static double failureGivenObs(Cell[][] map, Cell previousCell) {
+		double prob = 0;
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				map[i][j].currentBelief = ;
+				prob += (previousCell.falseNegative * map[i][j].currentBelief) / observations;
 			}
 		}
+		return prob;
+	}
+	
+	//P(target in cell i | obs_t ^ fail j)
+	public static double targetInIGivenObsAndFailJ(Cell nextCell, Cell previousCell) {
+		double prob = 0;
+		if (nextCell.equals(previousCell)) {
+			prob = nextCell.falseNegative;
+			return prob;
+		} else {
+			prob = 1;
+			return prob;
+		}
+	}
+	
+	//ASSIGN CURRENT BELIEF Belief[Celli] = P(Target In Celli | Observations Through Time t)
+	public static Cell[][] updateCurrentBelief(Cell[][] map, Cell nextCell, Cell previousCell) {
+		nextCell.priorBelief = nextCell.currentBelief;
+		nextCell.currentBelief = (nextCell.currentBelief * targetInIGivenObsAndFailJ(nextCell, previousCell)) / failureGivenObs(map, previousCell);
 		return map;
 	}
 	

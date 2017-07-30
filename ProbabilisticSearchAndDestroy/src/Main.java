@@ -41,15 +41,13 @@ public class Main {
 		Probabilities.printFalsePositive(map);
 		Probabilities.printCurrentBelief(map);
 		
-		//TEST AFTER THIS LINE.............................
-		/*map = Probabilities.currentBelief(map);
-		Probabilities.printCurrentBelief(map);
-		double prior = map[0][1].currentBelief;
-		double current = 0.5;
-		map[0][1].currentBelief = current;
-		
-		map = Normalize.normalizeMap(map, map[0][1], prior, current);
-		System.out.println();
-		Probabilities.printCurrentBelief(map);*/
+		//RULES
+		System.out.println("Which rule do you want to use to search?     (type o for 'our rule', 1 for 'rule 1', and 2 for 'rule 2')");
+		String ans = input.next();
+		if ("o".equals(ans)) {
+			Rules.ourRule(map);
+		} else {
+			System.out.println("wrong input");
+		}
 	}
 }
