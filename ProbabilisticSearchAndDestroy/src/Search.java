@@ -7,7 +7,7 @@ public class Search {
 		int random = r.nextInt(10) + 1;
 		if (random == 1 || random == 2) {
 			return false;
-		} else if (random > 2 && cell.target == false) {	//HMMM???
+		} else if (random > 2 && cell.target == false) {
 			return false;
 		} else if (random > 2 && cell.target == true) {
 			return true;
@@ -20,7 +20,7 @@ public class Search {
 		int random = r.nextInt(10) + 1;
 		if (random >= 1 && random <= 4) {
 			return false;
-		} else if (random > 4 && cell.target == false) {	//HMMM???
+		} else if (random > 4 && cell.target == false) {
 			return false;
 		} else if (random > 4 && cell.target == true) {
 			return true;
@@ -33,7 +33,7 @@ public class Search {
 		int random = r.nextInt(10) + 1;
 		if (random >= 1 && random <= 6) {
 			return false;
-		} else if (random > 6 && cell.target == false) {	//HMMM???
+		} else if (random > 6 && cell.target == false) {
 			return false;
 		} else if (random > 6 && cell.target == true) {
 			return true;
@@ -46,7 +46,7 @@ public class Search {
 		int random = r.nextInt(10) + 1;
 		if (random != 10) {
 			return false;
-		} else if (random == 10 && cell.target == false) {	//HMMM???
+		} else if (random == 10 && cell.target == false) {
 			return false;
 		} else if (random == 10 && cell.target == true) {
 			return true;

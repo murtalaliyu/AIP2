@@ -2,13 +2,11 @@ public class Probabilities {
 
 	static double priorBelief = 0;
 	
-	//ASSIGN PRIOR BELIEF P(Target In Celli)
-	public static Cell[][] priorBelief(Cell[][] map) {
-		//in our prior belief, each cell has equal probability of containing our target
-		priorBelief = (double) (1 / (double)(Main.row*Main.col));
+	//ASSIGN FALSE POSITIVE P(Target Found In Celli | Target Not In Celli) <-- this is always 0 for all cells
+	public static Cell[][] falsePositive(Cell[][] map) {
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				map[i][j].priorBelief = priorBelief;
+				map[i][j].falsePositive = 0;
 			}
 		}
 		return map;
@@ -32,11 +30,14 @@ public class Probabilities {
 		return map;
 	}
 	
-	//ASSIGN FALSE POSITIVE P(Target Found In Celli | Target Not In Celli) <-- this is always 0 for all cells
-	public static Cell[][] falsePositive(Cell[][] map) {
+	//ASSIGN PRIOR BELIEF P(Target In Celli)
+	public static Cell[][] priorBelief(Cell[][] map) {
+		//in our prior belief, each cell has equal probability of containing our target
+		priorBelief = (double) (1 / (double)(Main.row*Main.col));
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				map[i][j].falsePositive = 0;
+				map[i][j].priorBelief = priorBelief;
+				map[i][j].currentBelief = priorBelief;
 			}
 		}
 		return map;
@@ -47,7 +48,7 @@ public class Probabilities {
 	public static Cell[][] currentBelief(Cell[][] map) {
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				map[i][j].currentBelief = map[i][j].priorBelief;
+				map[i][j].currentBelief = ;
 			}
 		}
 		return map;

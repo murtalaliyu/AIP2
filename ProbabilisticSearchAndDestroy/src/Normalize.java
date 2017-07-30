@@ -1,12 +1,15 @@
 public class Normalize {
 
 	//NORMALIZE AFTER CHANGING A PARTICULAR CELL's CURRENT BELIEF
-	//ERROR
+	//PROBABLE ERROR
 	public static Cell[][] normalizeMap(Cell[][] map, Cell cell, double whatItWas, double whatItIs) {
-		
-		double difference = Math.abs(whatItWas - whatItIs);	
-		double numCells = (double) Main.row * Main.col;
-		double normFactor = difference/(numCells-1);
+		System.out.println("we entered Normalize.normalizeMap");
+		double difference = Math.abs(whatItWas - whatItIs);
+		System.out.println("difference: " + difference);
+		double numCells = (double) (Main.row * Main.col)-1;
+		System.out.println("number of cells to update: " + numCells);
+		double normFactor = difference/numCells;
+		System.out.println("normalization factor: " + normFactor);
 		
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
@@ -15,6 +18,7 @@ public class Normalize {
 				}
 			}
 		}
+		System.out.println("we left Normalize.normalizeMap");
 		return map;
 	}
 }

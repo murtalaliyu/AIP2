@@ -39,14 +39,17 @@ public class Main {
 		Probabilities.printFalseNegative(map);
 		map = Probabilities.falsePositive(map);
 		Probabilities.printFalsePositive(map);
+		Probabilities.printCurrentBelief(map);
 		
 		//TEST AFTER THIS LINE.............................
-		map = Probabilities.currentBelief(map);
+		/*map = Probabilities.currentBelief(map);
+		Probabilities.printCurrentBelief(map);
 		double prior = map[0][1].currentBelief;
-		double current = 0.2;
+		double current = 0.5;
 		map[0][1].currentBelief = current;
 		
 		map = Normalize.normalizeMap(map, map[0][1], prior, current);
-		Probabilities.printCurrentBelief(map);
+		System.out.println();
+		Probabilities.printCurrentBelief(map);*/
 	}
 }
