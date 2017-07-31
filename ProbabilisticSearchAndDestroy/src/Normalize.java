@@ -7,7 +7,7 @@ public class Normalize {
 	public static Cell[][] normalizeMap(Cell[][] map, Cell cell, double whatItWas, double whatItIs) {
 		//System.out.println("we entered Normalize.normalizeMap");
 		double difference = Math.abs(whatItWas - whatItIs);
-		//System.out.println("difference: " + difference);
+		System.out.println("difference: " + difference);
 		double numCells = (double) (Main.row * Main.col)-1;
 		//System.out.println("number of cells to update: " + numCells);
 		normFactor = difference/numCells;

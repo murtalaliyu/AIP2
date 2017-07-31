@@ -1,7 +1,7 @@
 public class Probabilities {
 	
 	static double priorBelief = 0;
-	static double observations = 1;
+	static double observation = 1;
 	
 	//ASSIGN FALSE POSITIVE P(Target Found In Celli | Target Not In Celli) <-- this is always 0 for all cells
 	public static Cell[][] falsePositive(Cell[][] map) {
@@ -44,10 +44,10 @@ public class Probabilities {
 		return map;
 	}
 	
-	//UPDATE OBSERVATIONS 
+	//UPDATE OBSERVATION
 	public static double updateObservation(Cell cell) {
-		observations = observations * cell.falseNegative;
-		return observations;
+		observation *= cell.falseNegative;
+		return observation;
 	}
 	
 	//P(fail j | obs_t)
@@ -55,7 +55,7 @@ public class Probabilities {
 		double prob = 0;
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				prob += (previousCell.falseNegative * map[i][j].currentBelief) / observations;
+				prob += (previousCell.falseNegative * map[i][j].currentBelief) / observation;
 			}
 		}
 		return prob;
@@ -77,15 +77,30 @@ public class Probabilities {
 	public static Cell[][] updateCurrentBelief(Cell[][] map, Cell nextCell, Cell previousCell) {
 		nextCell.priorBelief = nextCell.currentBelief;
 		nextCell.currentBelief = (nextCell.currentBelief * targetInIGivenObsAndFailJ(nextCell, previousCell)) / failureGivenObs(map, previousCell);
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (nextCell.equals(map[i][j])) {
+					map[i][j].priorBelief = nextCell.priorBelief;
+					map[i][j].currentBelief = nextCell.currentBelief;
+				}
+			}
+		}
 		return map;
 	}
 	
-	//PRINT PRIOR BELIEF
-	public static void printPriorBelief(Cell[][] map) {
-		System.out.println("Prior belief: ");
+	/* ---------------------------------------------------------------
+	 *                                                                |
+	 * PRINT FUNCTIONS START HERE                                     |      
+	 *                                                                |
+	 *----------------------------------------------------------------
+	 */
+	
+	//PRINT FALSE POSITIVE
+	public static void printFalsePositive(Cell[][] map) {
+		System.out.println("False positive: ");
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				System.out.print(map[i][j].priorBelief + "   ");
+				System.out.print(map[i][j].falsePositive + "   ");
 			}
 			System.out.println();
 		}
@@ -104,12 +119,12 @@ public class Probabilities {
 		System.out.println();
 	}
 	
-	//PRINT FALSE POSITIVE
-	public static void printFalsePositive(Cell[][] map) {
-		System.out.println("False positive: ");
+	//PRINT PRIOR BELIEF
+	public static void printPriorBelief(Cell[][] map) {
+		System.out.println("Prior belief: ");
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
-				System.out.print(map[i][j].falsePositive + "   ");
+				System.out.print(map[i][j].priorBelief + "   ");
 			}
 			System.out.println();
 		}

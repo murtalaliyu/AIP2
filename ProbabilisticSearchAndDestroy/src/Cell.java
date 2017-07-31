@@ -1,5 +1,6 @@
 public class Cell {
-
+	int row;
+	int col;
 	boolean right;
 	boolean bottom;
 	boolean top;
@@ -10,11 +11,13 @@ public class Cell {
 	double falseNegative;
 	double falsePositive;
 	double currentBelief;
-	int numSearched;
+	int timesSearched;
 	
-	public Cell(boolean right, boolean bottom, boolean top, boolean left,
+	public Cell(int row, int col, boolean right, boolean bottom, boolean top, boolean left,
 		boolean target, String status, double priorBelief, double falseNegative,
-		double falsePositive, double currentBelief, int numSearched) {
+		double falsePositive, double currentBelief, int timesSearched) {
+		this.row = row;
+		this.col = col;
 		this.right = right;
 		this.bottom = bottom;
 		this.top = top;
@@ -25,6 +28,6 @@ public class Cell {
 		this.falseNegative = falseNegative;
 		this.falsePositive = falsePositive;
 		this.currentBelief = currentBelief;
-		this.numSearched = numSearched;
+		this.timesSearched = timesSearched;
 	}
 }

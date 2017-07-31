@@ -10,17 +10,18 @@ public class Main {
 	static int col = 0;
 	static Scanner input = new Scanner(System.in);
 	
+	static Cell[][] map = null;
+	
 	public static void main(String[] args) {
 
 		System.out.println("Size of map: (enter row size, the column size)");
-
 		row = input.nextInt();
 		col = input.nextInt();
+		
 		System.out.println();
 		
-		Cell[][] map = new Cell[row][col];
-		
-		//MAP LOGISTICS
+		//MAP
+		map = new Cell[row][col];
 		map = Map.makeMap(map);
 		Map.printTerrain(map);
 		map = Map.makeTerrain(map);
@@ -31,23 +32,27 @@ public class Main {
 		Map.printNeighborsValidity(map);
 		
 		//PROBABILITIES
+		map = Probabilities.falsePositive(map);
+		Probabilities.printFalsePositive(map);
+		map = Probabilities.falseNegative(map);
+		Probabilities.printFalseNegative(map);
 		map = Probabilities.priorBelief(map);
 		System.out.println("P(Target in Celli) = " + Probabilities.priorBelief 
 		+ "  <--- This represents our prior belief about where the target is" + "\n");
 		Probabilities.printPriorBelief(map);
-		map = Probabilities.falseNegative(map);
-		Probabilities.printFalseNegative(map);
-		map = Probabilities.falsePositive(map);
-		Probabilities.printFalsePositive(map);
 		Probabilities.printCurrentBelief(map);
 		
 		//RULES
-		System.out.println("Which rule do you want to use to search?     (type o for 'our rule', 1 for 'rule 1', and 2 for 'rule 2')");
+		System.out.println("Which rule do you want to use to search? Type 'o' for our rule, '1' for rule 1, or '2' for rule 2.");
 		String ans = input.next();
 		if ("o".equals(ans)) {
-			Rules.ourRule(map);
+			map = Rules.ourRule(map);
+		} else if ("1".equals(ans)) {
+			map = Rules.ruleOne(map);
+		} else if ("2".equals(ans)) {
+			map = Rules.ruleTwo(map);
 		} else {
-			System.out.println("wrong input");
+			System.out.println("wrong input. this program has terminated.");
 		}
 	}
 }

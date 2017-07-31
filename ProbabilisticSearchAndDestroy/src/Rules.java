@@ -1,8 +1,7 @@
 public class Rules {
 	
-	//FIND THE CELL WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF AND SEARCH IT
-	public static void ourRule(Cell[][] map) {
-
+	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST  AND SEARCH IT
+	public static Cell[][] ourRule(Cell[][] map) {
 		boolean result = false;
 		Cell previousCell = map[0][0];
 		Cell nextCell = map[0][0];
@@ -28,7 +27,7 @@ public class Rules {
 					}
 				}
 			}
-			if (lowestFalseNeg.numSearched < highestCurrBel.numSearched) {
+			if (lowestFalseNeg.timesSearched <= highestCurrBel.timesSearched) {
 				previousCell = nextCell;
 				nextCell = lowestFalseNeg;
 				r = fni_index; c = fnj_index;
@@ -37,30 +36,41 @@ public class Rules {
 				nextCell = highestCurrBel;
 				r = cbi_index; c = cbj_index;
 			}
-			if (previousCell.numSearched == 0 && nextCell.numSearched == 0) {
-				previousCell = nextCell;
-			}
 			
 			//search nextCell
 			result = Search.searchTerrain(nextCell);
 			numSearches++;
+			//print number of searches after each iteration
+			System.out.println("number of cells searched: " + numSearches);
+			//print cell index searched
+			System.out.println("cell at row " + r + " and column " + c + " was searched.");
+			//print result
+			System.out.println("result: " + result);
+			//print # of times this cell has been searched
+			System.out.println("# of times this cell has been searched: " + nextCell.timesSearched);
 			//update nextCell's current belief
 			map = Probabilities.updateCurrentBelief(map, nextCell, previousCell);
 			//normalize all other cells
 			map = Normalize.normalizeMap(map, nextCell, nextCell.priorBelief, nextCell.currentBelief);
 			
-			//print number of searches after each iteration
-			System.out.println("number of searches: " + numSearches);
-			//print cell index searched
-			System.out.println("cell at row " + r + " and column " + c + " was searched." + "\n");
-			//print result
-			System.out.println(result);
+			System.out.println("probability of observations up to time t = " + numSearches + ": " + Probabilities.observation);
+			//print prior belief after each iteration
+			Probabilities.printPriorBelief(map);
 			//print current belief after each iteration
 			Probabilities.printCurrentBelief(map);
 			
+			System.out.println("---------------------------------------------------------------------------------------");
 		} while (result == false);
-		
-		//print map with the location of the target
-		Map.printTarget(map);
+		return map;
+	}
+	
+	// incomplete --> Rule 1: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF CONTAINING THE TARGET.
+	public static Cell[][] ruleOne(Cell[][] map) {
+		return map;
+	}
+			
+	// incomplete --> Rule 2: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF FINDING THE TARGET.   
+	public static Cell[][] ruleTwo(Cell[][] map) {
+		return map;
 	}
 }
