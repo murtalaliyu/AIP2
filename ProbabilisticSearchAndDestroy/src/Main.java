@@ -8,9 +8,8 @@ public class Main {
 	
 	static int row = 0;
 	static int col = 0;
-	static Scanner input = new Scanner(System.in);
-	
 	static Cell[][] map = null;
+	static Scanner input = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 

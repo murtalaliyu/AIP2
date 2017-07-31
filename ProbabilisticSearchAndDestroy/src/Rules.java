@@ -1,6 +1,6 @@
 public class Rules {
 	
-	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST  AND SEARCH IT
+	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST SEARCHED AND SEARCH IT
 	public static Cell[][] ourRule(Cell[][] map) {
 		boolean result = false;
 		Cell previousCell = map[0][0];
@@ -51,7 +51,7 @@ public class Rules {
 			//update nextCell's current belief
 			map = Probabilities.updateCurrentBelief(map, nextCell, previousCell);
 			//normalize all other cells
-			map = Normalize.normalizeMap(map, nextCell, nextCell.priorBelief, nextCell.currentBelief);
+			map = Normalize.normalizeMap(map, nextCell);
 			
 			System.out.println("probability of observations up to time t = " + numSearches + ": " + Probabilities.observation);
 			//print prior belief after each iteration

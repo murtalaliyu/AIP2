@@ -4,9 +4,9 @@ public class Normalize {
 	
 	//NORMALIZE AFTER CHANGING A PARTICULAR CELL's CURRENT BELIEF
 	//PROBABLE ERROR
-	public static Cell[][] normalizeMap(Cell[][] map, Cell cell, double whatItWas, double whatItIs) {
+	public static Cell[][] normalizeMap(Cell[][] map, Cell cell) {
 		//System.out.println("we entered Normalize.normalizeMap");
-		double difference = Math.abs(whatItWas - whatItIs);
+		double difference = Math.abs(cell.priorBelief - cell.currentBelief);
 		System.out.println("difference: " + difference);
 		double numCells = (double) (Main.row * Main.col)-1;
 		//System.out.println("number of cells to update: " + numCells);
