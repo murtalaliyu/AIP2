@@ -42,7 +42,7 @@ public class Main {
 		Probabilities.printCurrentBelief(map);
 		
 		//RULES
-		System.out.println("Which rule do you want to use to search? Type 'o' for our rule, '1' for rule 1, or '2' for rule 2.");
+		System.out.println("Which rule do you want to use to search? Type 'o' for our rule, '1' for rule 1, '2' for rule 2, or '4' for rule 4");
 		String ans = input.next();
 		if ("o".equals(ans)) {
 			map = Rules.ourRule(map);
@@ -50,6 +50,8 @@ public class Main {
 			map = Rules.ruleOne(map);
 		} else if ("2".equals(ans)) {
 			map = Rules.ruleTwo(map);
+		} else if ("4".equals(ans)) {
+			map = Rules.questionFour(map);
 		} else {
 			System.out.println("wrong input. this program has terminated.");
 		}
