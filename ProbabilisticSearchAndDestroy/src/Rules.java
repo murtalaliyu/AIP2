@@ -111,6 +111,7 @@ public class Rules {
 		do {
 			//find the next cell to be searched (Rule 2: search from lowest to highest false negative rate. if you've searched all in a cycle, clear list and repeat)
 			if (list.isEmpty()) {
+				System.out.println("list has been refilled");
 				list = refillList(map);
 			} 
 			//print list details
@@ -144,7 +145,7 @@ public class Rules {
 		return map;
 	}
 	
-	//RULE 2 HELPER FUNCTION TO REFILL LIST
+	//RULE 2 HELPER FUNCTION: REFILLS LIST
 	public static ArrayList<Cell> refillList(Cell[][] map) {
 		ArrayList<Cell> list = new ArrayList<Cell>();
 		for (int i = 0; i < Main.row; i++) {
@@ -184,7 +185,74 @@ public class Rules {
 	
 	//incomplete --> Question 4: 
 	public static Cell[][] questionFour(Cell[][] map) {
+		boolean result = false;
+		Cell nextCell = map[0][0];
+		int r = 0, c = 0;
+		int numSearches = 0;
+		int max = (Main.row-1) + (Main.col-1);
+		
+		do {
+			//find the next cell to be searched 
+			//ERROR HERE
+			for (int i = 0; i < Main.row; i++) {
+				for (int j = 0; j < Main.col; j++) {
+					Cell adj = highestCurrBel(map[i][j]);
+					if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
+						nextCell = map[i][j];
+						r = map[i][j].row; c = map[i][j].col;
+					} else {
+						nextCell = adj;
+						r = adj.row; c = adj.col;
+					}
+				}
+			}
+			
+			//search nextCell
+			result = Search.searchTerrain(nextCell);
+			numSearches++;
+			
+			//print statements one
+			printStatementsOne(numSearches, r, c, result, nextCell);
+			
+			//update nextCell's current belief
+			map = Probabilities.updateCurrentBelief(map, nextCell);
+			//normalize all other cells
+			map = Normalize.normalizeMap(map, nextCell);
+			
+			//print statements two
+			printStatementsTwo(map, numSearches);
+		} while (result == false);
+		
+		//for really large maps
+		System.out.println("final analysis:");
+		printStatementsOne(numSearches, r, c, result, nextCell);
 		return map;
+	}
+	
+	//QUESTION 4 HELPER FUNCTION: FINDS THE NEIGHBOR WITH THE HIGHEST CURRENT BELIEF
+	public static Cell highestCurrBel(Cell cell) {
+		Cell highestNeighCell = new Cell(0,0,false,false,false,false,false,"-",0,0,0,0,0);
+		if (cell.right == true) {
+			if (Main.map[cell.row][cell.col+1].currentBelief > highestNeighCell.currentBelief) {
+				highestNeighCell = Main.map[cell.row][cell.col+1];
+			}
+		}
+		if (cell.bottom == true) {
+			if (Main.map[cell.row+1][cell.col].currentBelief > highestNeighCell.currentBelief) {
+				highestNeighCell = Main.map[cell.row][cell.col+1];
+			}
+		}
+		if (cell.top == true) {
+			if (Main.map[cell.row-1][cell.col].currentBelief > highestNeighCell.currentBelief) {
+				highestNeighCell = Main.map[cell.row][cell.col+1];
+			}
+		}
+		if (cell.left == true) {
+			if (Main.map[cell.row][cell.col-1].currentBelief > highestNeighCell.currentBelief) {
+				highestNeighCell = Main.map[cell.row][cell.col+1];
+			}
+		}
+		return highestNeighCell;
 	}
 
 	/* ---------------------------------------------------------------
@@ -225,7 +293,7 @@ public class Rules {
 	
 	//PRINT LIST
 	public static void printList(ArrayList<Cell> list) {
-		System.out.println("list:");
+		System.out.print("list: ");
 		for (int i = 0; i < list.size(); i++) {
 			System.out.print(list.get(i).status + ", ");
 		}
