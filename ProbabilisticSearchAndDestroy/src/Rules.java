@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Rules {
 	
-	// incomplete --> Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST SEARCHED AND SEARCH IT
+	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST SEARCHED AND SEARCH IT
 	public static Cell[][] ourRule(Cell[][] map) {
 		boolean result = false;
 		Cell nextCell = map[0][0];
@@ -54,6 +54,7 @@ public class Rules {
 		} while (result == false);
 		
 		//for really large maps
+		System.out.println("final analysis:");
 		printStatementsOne(numSearches, r, c, result, nextCell);
 		return map;
 	}
@@ -85,16 +86,15 @@ public class Rules {
 			
 			//update nextCell's current belief
 			map = Probabilities.updateCurrentBelief(map, nextCell);
-			
 			//normalize all other cells
 			map = Normalize.normalizeMap(map, nextCell);
 			
 			//print statements two
 			printStatementsTwo(map, numSearches);
-		
 		} while (result == false);
 		
 		//for really large maps
+		System.out.println("final analysis:");
 		printStatementsOne(numSearches, r, c, result, nextCell);
 		return map;
 	}
@@ -130,16 +130,15 @@ public class Rules {
 			
 			//update nextCell's current belief
 			map = Probabilities.updateCurrentBelief(map, nextCell);
-			
 			//normalize all other cells
 			map = Normalize.normalizeMap(map, nextCell);
 			
 			//print statements two
 			printStatementsTwo(map, numSearches);
-		
 		} while (result == false);
 		
 		//for really large maps
+		System.out.println("final analysis:");
 		printStatementsOne(numSearches, r, c, result, nextCell);
 		return map;
 	}
