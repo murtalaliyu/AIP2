@@ -74,19 +74,11 @@ public class Probabilities {
 	}
 	
 	//ASSIGN CURRENT BELIEF Belief[Celli] = P(Target In Celli | Observations Through Time t)
-	public static Cell[][] updateCurrentBelief(Cell[][] map, Cell nextCell, Cell previousCell) {
-		nextCell.priorBelief = nextCell.currentBelief;
-		nextCell.currentBelief = (nextCell.currentBelief * targetInIGivenObsAndFailJ(nextCell, previousCell)) / failureGivenObs(map, previousCell);
-		for (int i = 0; i < Main.row; i++) {
-			for (int j = 0; j < Main.col; j++) {
-				if (nextCell.equals(map[i][j])) {
-					map[i][j].priorBelief = nextCell.priorBelief;
-					map[i][j].currentBelief = nextCell.currentBelief;
-				}
-			}
-		}
+	public static Cell[][] updateCurrentBelief(Cell[][] map, Cell cell) {
+		map[cell.row][cell.col].priorBelief = map[cell.row][cell.col].currentBelief;
+		map[cell.row][cell.col].currentBelief *= cell.falseNegative;
 		return map;
-	}
+	} 
 	
 	/* ---------------------------------------------------------------
 	 *                                                                |
@@ -121,25 +113,31 @@ public class Probabilities {
 	
 	//PRINT PRIOR BELIEF
 	public static void printPriorBelief(Cell[][] map) {
+		double sum = 0;
 		System.out.println("Prior belief: ");
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
 				System.out.print(map[i][j].priorBelief + "   ");
+				sum += map[i][j].priorBelief;
 			}
 			System.out.println();
 		}
+		System.out.println("Total: " + sum);
 		System.out.println();
 	}
 	
 	//PRINT CURRENT BELIEF
 	public static void printCurrentBelief(Cell[][] map) {
+		double sum = 0;
 		System.out.println("Current belief: ");
 		for (int i = 0; i < Main.row; i++) {
 			for (int j = 0; j < Main.col; j++) {
 				System.out.print(map[i][j].currentBelief + "   ");
+				sum += map[i][j].priorBelief;
 			}
 			System.out.println();
 		}
+		System.out.println("Total: " + sum);
 		System.out.println();
 	}
 }
