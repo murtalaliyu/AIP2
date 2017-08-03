@@ -99,27 +99,28 @@ public class Rules {
 		return map;
 	}
 			
-	// incomplete --> Rule 2: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF FINDING THE TARGET.   
+	//Rule 2: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF FINDING THE TARGET.   
 	public static Cell[][] ruleTwo(Cell[][] map) {
 		boolean result = false;
 		Cell nextCell = map[0][0];
 		int r = 0, c = 0;
 		int numSearches = 0;
+		int search = 0;
 		ArrayList<Cell> list = new ArrayList<Cell>();
 		
 		do {
 			//find the next cell to be searched (Rule 2: search from lowest to highest false negative rate. if you've searched all in a cycle, clear list and repeat)
-			//ERROR
-			for (int i = 0; i < Main.row; i++) {
-				for (int j = 0; j < Main.col; j++) {
-					if (map[i][j].falseNegative < nextCell.falseNegative && !list.contains(map[i][j])) {
-						nextCell = map[i][j];
-						r = i; c = j;
-						list.add(map[i][j]);
-					}
-				}
-			}
-			list.clear();
+			if (list.isEmpty()) {
+				list = refillList(map);
+			} 
+			//print list details
+			printList(list);
+			System.out.println("size of list: " + list.size());
+			
+			//always get the first cell in the list (it has the lowest false negative)
+			nextCell = list.get(search);
+			list.remove(search);
+			r = nextCell.row; c = nextCell.col;
 			
 			//search nextCell
 			result = Search.searchTerrain(nextCell);
@@ -141,6 +142,44 @@ public class Rules {
 		System.out.println("final analysis:");
 		printStatementsOne(numSearches, r, c, result, nextCell);
 		return map;
+	}
+	
+	//RULE 2 HELPER FUNCTION TO REFILL LIST
+	public static ArrayList<Cell> refillList(Cell[][] map) {
+		ArrayList<Cell> list = new ArrayList<Cell>();
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].falseNegative == 0.2) {
+					list.add(map[i][j]);
+					map[i][j].timesSearched++;
+				}
+			}
+		}
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].falseNegative == 0.4) {
+					list.add(map[i][j]);
+					map[i][j].timesSearched++;
+				}
+			}
+		}
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].falseNegative == 0.6) {
+					list.add(map[i][j]);
+					map[i][j].timesSearched++;
+				}
+			}
+		}
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].falseNegative == 0.9) {
+					list.add(map[i][j]);
+					map[i][j].timesSearched++;
+				}
+			}
+		}
+		return list;
 	}
 	
 	//incomplete --> Question 4: 
@@ -182,5 +221,14 @@ public class Rules {
 		System.out.println("---------------------------------------------------------------"
 				+ "------------------------");
 		////////////////////////////////////////////////////////////////////////////////////////
+	}
+	
+	//PRINT LIST
+	public static void printList(ArrayList<Cell> list) {
+		System.out.println("list:");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(list.get(i).status + ", ");
+		}
+		System.out.println("\n");
 	}
 }
