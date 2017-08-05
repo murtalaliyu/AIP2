@@ -7,7 +7,6 @@ public class Rules {
 	//RULES IMPLEMENTATION
 	public static void findCellToSearch(Cell[][] map) {
 		boolean result = false;
-		int r = 0, c = 0;
 		int numSearches = 0;
 		Cell nextCell = null;
 		do {
@@ -40,7 +39,7 @@ public class Rules {
 		
 		//for really large maps
 		System.out.println("final analysis:");
-		printStatementsOne(numSearches, r, c, result, nextCell);
+		printStatementsOne(numSearches, nextCell.row, nextCell.col, result, nextCell);
 		//return map;
 	}
 	
