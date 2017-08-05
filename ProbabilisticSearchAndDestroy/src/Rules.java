@@ -1,40 +1,25 @@
 import java.util.ArrayList;
 
 public class Rules {
+
+	static ArrayList<Cell> list = new ArrayList<Cell>();
 	
-	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST SEARCHED AND SEARCH IT
-	public static Cell[][] ourRule(Cell[][] map) {
+	//RULES IMPLEMENTATION
+	public static void findCellToSearch(Cell[][] map) {
 		boolean result = false;
-		Cell nextCell = map[0][0];
-		int fni_index = 0, fnj_index = 0;
-		int cbi_index = 0, cbj_index = 0;
 		int r = 0, c = 0;
 		int numSearches = 0;
-		
+		Cell nextCell = null;
 		do {
 			//find the next cell to be searched
-			Cell lowestFalseNeg = map[0][0];
-			Cell highestCurrBel = map[0][0];
-			for (int i = 0; i < Main.row; i++) {
-				for (int j = 0; j < Main.col; j++) {
-					if (map[i][j].falseNegative < lowestFalseNeg.falseNegative) {
-						lowestFalseNeg = map[i][j];
-						fni_index = i;
-						fnj_index = j;
-					} 
-					if (map[i][j].currentBelief > highestCurrBel.currentBelief) {
-						highestCurrBel = map[i][j];
-						cbi_index = i;
-						cbj_index = j;
-					}
-				}
-			}
-			if (lowestFalseNeg.timesSearched <= highestCurrBel.timesSearched) {
-				nextCell = lowestFalseNeg;
-				r = fni_index; c = fnj_index;
-			} else {
-				nextCell = highestCurrBel;
-				r = cbi_index; c = cbj_index;
+			if ("o".equals(Main.ans)) {
+				nextCell = ourRule(map);
+			} else if ("1".equals(Main.ans)) {
+				nextCell = ruleOne(map); 
+			} else if ("2".equals(Main.ans)) {
+				nextCell = ruleTwo(list);
+			} else if ("4".equals(Main.ans)) {
+				nextCell = questionFour(map);
 			}
 			
 			//search nextCell
@@ -42,7 +27,7 @@ public class Rules {
 			numSearches++;
 			
 			//print statements one
-			printStatementsOne(numSearches, r, c, result, nextCell);
+			printStatementsOne(numSearches, nextCell.row, nextCell.col, result, nextCell);
 			
 			//update nextCell's current belief
 			map = Probabilities.updateCurrentBelief(map, nextCell);
@@ -56,93 +41,67 @@ public class Rules {
 		//for really large maps
 		System.out.println("final analysis:");
 		printStatementsOne(numSearches, r, c, result, nextCell);
-		return map;
+		//return map;
+	}
+	
+	//Our rule: BETWEEN CELLS WITH THE LOWEST FALSE NEGATIVE & HIGHEST CURRENT BELIEF, PICK THE LEAST SEARCHED AND SEARCH IT
+	public static Cell ourRule(Cell[][] map) {
+		Cell nextCell = map[0][0];
+		
+		//find the next cell to be searched
+		Cell lowestFalseNeg = map[0][0];
+		Cell highestCurrBel = map[0][0];
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].falseNegative < lowestFalseNeg.falseNegative) {
+					lowestFalseNeg = map[i][j];
+				} 
+				if (map[i][j].currentBelief > highestCurrBel.currentBelief) {
+					highestCurrBel = map[i][j];
+				}
+			}
+		}
+		if (lowestFalseNeg.timesSearched <= highestCurrBel.timesSearched) {
+			nextCell = lowestFalseNeg;
+		} else {
+			nextCell = highestCurrBel;
+		}
+		return nextCell;
 	}
 	
 	//Rule 1: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF CONTAINING THE TARGET.
-	public static Cell[][] ruleOne(Cell[][] map) {
-		boolean result = false;
+	public static Cell ruleOne(Cell[][] map) {
 		Cell nextCell = map[0][0];
-		int r = 0, c = 0;
-		int numSearches = 0;
 		
-		do {
-			//find the next cell to be searched (Rule 1: make nextCell the cell with highest current belief)
-			for (int i = 0; i < Main.row; i++) {
-				for (int j = 0; j < Main.col; j++) {
-					if (map[i][j].currentBelief > nextCell.currentBelief) {
-						nextCell = map[i][j];
-						r = i; c = j;
-					} 
-				}
+		//find the next cell to be searched (Rule 1: make nextCell the cell with highest current belief)
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				if (map[i][j].currentBelief > nextCell.currentBelief) {
+					nextCell = map[i][j];
+				} 
 			}
-			
-			//search nextCell
-			result = Search.searchTerrain(nextCell);
-			numSearches++;
-			
-			//print statements one
-			printStatementsOne(numSearches, r, c, result, nextCell);
-			
-			//update nextCell's current belief
-			map = Probabilities.updateCurrentBelief(map, nextCell);
-			//normalize all other cells
-			map = Normalize.normalizeMap(map, nextCell);
-			
-			//print statements two
-			printStatementsTwo(map, numSearches);
-		} while (result == false);
-		
-		//for really large maps
-		System.out.println("final analysis:");
-		printStatementsOne(numSearches, r, c, result, nextCell);
-		return map;
+		}
+		return nextCell;
 	}
 			
 	//Rule 2: AT ANY TIME, SEARCH THE CELL WITH THE HIGHEST PROBABILITY OF FINDING THE TARGET.   
-	public static Cell[][] ruleTwo(Cell[][] map) {
-		boolean result = false;
-		Cell nextCell = map[0][0];
-		int r = 0, c = 0;
-		int numSearches = 0;
+	public static Cell ruleTwo(ArrayList<Cell> list) {
 		int search = 0;
-		ArrayList<Cell> list = new ArrayList<Cell>();
 		
-		do {
-			//find the next cell to be searched (Rule 2: search from lowest to highest false negative rate. if you've searched all in a cycle, clear list and repeat)
-			if (list.isEmpty()) {
-				System.out.println("list has been refilled");
-				list = refillList(map);
-			} 
-			//print list details
-			printList(list);
-			System.out.println("size of list: " + list.size());
-			
-			//always get the first cell in the list (it has the lowest false negative)
-			nextCell = list.get(search);
-			list.remove(search);
-			r = nextCell.row; c = nextCell.col;
-			
-			//search nextCell
-			result = Search.searchTerrain(nextCell);
-			numSearches++;
-			
-			//print statements one
-			printStatementsOne(numSearches, r, c, result, nextCell);
-			
-			//update nextCell's current belief
-			map = Probabilities.updateCurrentBelief(map, nextCell);
-			//normalize all other cells
-			map = Normalize.normalizeMap(map, nextCell);
-			
-			//print statements two
-			printStatementsTwo(map, numSearches);
-		} while (result == false);
+		//find the next cell to be searched (Rule 2: search from lowest to highest false negative rate. if you've searched all in a cycle, clear list and repeat)
+		if (Rules.list.isEmpty()) {
+			System.out.println("list has been refilled");
+			Rules.list = refillList(Main.map);
+		} 
+		//print list details
+		printList(Rules.list);
+		System.out.println("size of list: " + Rules.list.size());
 		
-		//for really large maps
-		System.out.println("final analysis:");
-		printStatementsOne(numSearches, r, c, result, nextCell);
-		return map;
+		//always get the first cell in the list (it has the lowest false negative)
+		Cell nextCell = Rules.list.get(search);
+		Rules.list.remove(search);
+		
+		return nextCell;
 	}
 	
 	//RULE 2 HELPER FUNCTION: REFILLS LIST
@@ -184,49 +143,23 @@ public class Rules {
 	}
 	
 	//incomplete --> Question 4: 
-	public static Cell[][] questionFour(Cell[][] map) {
-		boolean result = false;
+	public static Cell questionFour(Cell[][] map) {
 		Cell nextCell = map[0][0];
-		int r = 0, c = 0;
-		int numSearches = 0;
 		int max = (Main.row-1) + (Main.col-1);
 		
-		do {
-			//find the next cell to be searched 
-			//ERROR HERE
- 			for (int i = 0; i < Main.row; i++) {
- 				for (int j = 0; j < Main.col; j++) {
- 					Cell adj = highestCurrBel(map[i][j]);
- 					if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
- 						nextCell = map[i][j];
- 						r = map[i][j].row; c = map[i][j].col;
- 					} else {
- 						nextCell = adj;
- 						r = adj.row; c = adj.col;
- 					}
- 				}
- 			}
-			
-			//search nextCell
-			result = Search.searchTerrain(nextCell);
-			numSearches++;
-			
-			//print statements one
-			printStatementsOne(numSearches, r, c, result, nextCell);
-			
-			//update nextCell's current belief
-			map = Probabilities.updateCurrentBelief(map, nextCell);
-			//normalize all other cells
-			map = Normalize.normalizeMap(map, nextCell);
-			
-			//print statements two
-			printStatementsTwo(map, numSearches);
-		} while (result == false);
-		
-		//for really large maps
-		System.out.println("final analysis:");
-		printStatementsOne(numSearches, r, c, result, nextCell);
-		return map;
+		//find the next cell to be searched 
+		//ERROR HERE
+			for (int i = 0; i < Main.row; i++) {
+				for (int j = 0; j < Main.col; j++) {
+					Cell adj = highestCurrBel(map[i][j]);
+					if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
+						nextCell = map[i][j];
+					} else {
+						nextCell = adj;
+					}
+				}
+			}
+			return nextCell;
 	}
 	
 	//QUESTION 4 HELPER FUNCTION: FINDS THE NEIGHBOR WITH THE HIGHEST CURRENT BELIEF

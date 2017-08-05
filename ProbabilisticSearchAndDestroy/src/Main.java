@@ -9,6 +9,7 @@ public class Main {
 	static int row = 0;
 	static int col = 0;
 	static Cell[][] map = null;
+	static String ans = "";
 	static Scanner input = new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -43,22 +44,12 @@ public class Main {
 		
 		//RULES
 		//ERROR: does not re-instantiate node values after each rule is called
-		String ans = "";
+		ans = "";
 		do {
 			System.out.println("\n \n");
 			System.out.println("Which rule do you want to use to search? Type 'o' for our rule, '1' for rule 1, '2' for rule 2, or '4' for rule 4");
 			ans = input.next();
-			if ("o".equals(ans)) {
-				Rules.ourRule(map);
-			} else if ("1".equals(ans)) {
-				Rules.ruleOne(map);
-			} else if ("2".equals(ans)) {
-				Rules.ruleTwo(map);
-			} else if ("4".equals(ans)) {
-				Rules.questionFour(map);
-			} else {
-				System.out.println("this program has terminated.");
-			}
+			Rules.findCellToSearch(map);
 		} while (!"q".equals(ans));
 	}
 }
