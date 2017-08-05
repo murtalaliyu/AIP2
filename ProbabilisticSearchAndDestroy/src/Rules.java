@@ -194,6 +194,18 @@ public class Rules {
 		do {
 			//find the next cell to be searched 
 			//ERROR HERE
+ 			for (int i = 0; i < Main.row; i++) {
+ 				for (int j = 0; j < Main.col; j++) {
+ 					Cell adj = highestCurrBel(map[i][j]);
+ 					if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
+ 						nextCell = map[i][j];
+ 						r = map[i][j].row; c = map[i][j].col;
+ 					} else {
+ 						nextCell = adj;
+ 						r = adj.row; c = adj.col;
+ 					}
+ 				}
+ 			}
 			
 			//search nextCell
 			result = Search.searchTerrain(nextCell);
