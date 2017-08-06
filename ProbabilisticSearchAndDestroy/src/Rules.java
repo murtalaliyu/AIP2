@@ -144,19 +144,21 @@ public class Rules {
 	//incomplete --> Question 4: 
 	public static Cell questionFour(Cell[][] map) {
 		Cell nextCell = map[0][0];
-		int max = (Main.row-1) + (Main.col-1);
+		Cell desiredCell = map[0][0];
+		Cell maxNeighbor = map[0][0];
+		double numSpacesAway = 0;
+		double costOfMovement = 0;
 		
 		//find the next cell to be searched 
-		//ERROR HERE
-		for (int i = 0; i < Main.row; i++) {
-			for (int j = 0; j < Main.col; j++) {
-				Cell adj = highestCurrBel(map[i][j]);
-				if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
-					nextCell = map[i][j];
-				} else {
-					nextCell = adj;
-				}
-			}
+		desiredCell = Rules.ruleOne(map);	//or Rules.ruleTwo(map); or Rules.ourRule(map);
+		maxNeighbor = highestCurrBel(nextCell);
+		numSpacesAway = Math.abs((desiredCell.col-nextCell.col) + (desiredCell.row-nextCell.row));
+		costOfMovement = numSpacesAway / ((Main.row + Main.col)-2);
+		
+		if (costOfMovement > desiredCell.currentBelief) {	//ERROR???
+			nextCell = maxNeighbor;
+		} else {
+			nextCell = desiredCell;
 		}
 		return nextCell;
 	}
