@@ -148,17 +148,17 @@ public class Rules {
 		
 		//find the next cell to be searched 
 		//ERROR HERE
-			for (int i = 0; i < Main.row; i++) {
-				for (int j = 0; j < Main.col; j++) {
-					Cell adj = highestCurrBel(map[i][j]);
-					if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
-						nextCell = map[i][j];
-					} else {
-						nextCell = adj;
-					}
+		for (int i = 0; i < Main.row; i++) {
+			for (int j = 0; j < Main.col; j++) {
+				Cell adj = highestCurrBel(map[i][j]);
+				if ((map[i][j].currentBelief - adj.currentBelief) > (max/(Main.row*Main.col))) {
+					nextCell = map[i][j];
+				} else {
+					nextCell = adj;
 				}
 			}
-			return nextCell;
+		}
+		return nextCell;
 	}
 	
 	//QUESTION 4 HELPER FUNCTION: FINDS THE NEIGHBOR WITH THE HIGHEST CURRENT BELIEF
@@ -210,6 +210,9 @@ public class Rules {
 		System.out.println("result: " + result);
 		//print # of times this cell has been searched
 		System.out.println("# of times this cell has been searched: " + nextCell.timesSearched);
+		//print answers to questions 1 & 2
+		//ERROR: misplaced variable previousCell --> System.out.println("P(target in cell i | obs_t ^ fail j): " + Probabilities.targetInIGivenObsAndFailJ(nextCell, previousCell));
+		System.out.println("P(target found in cell(" + nextCell.row + "," + nextCell.col + ") | obstervations_t): " + Probabilities.updateObservation(nextCell));
 		////////////////////////////////////////////////////////////////////////////////////////////
 	}
 	
