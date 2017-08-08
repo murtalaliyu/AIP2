@@ -8,7 +8,7 @@ public class Rules {
 	public static void findCellToSearch(Cell[][] map) {
 		boolean result = false;
 		int numSearches = 0;
-		Cell nextCell = null;
+		Cell nextCell = map[0][0];
 		do {
 			//find the next cell to be searched
 			if ("o".equals(Main.ans)) {
@@ -18,7 +18,10 @@ public class Rules {
 			} else if ("2".equals(Main.ans)) {
 				nextCell = ruleTwo(list);
 			} else if ("4".equals(Main.ans)) {
-				nextCell = questionFour(map);
+				nextCell = questionFour(map, nextCell);
+			} else {
+				System.out.print("bye");
+				System.exit(0);
 			}
 			
 			//search nextCell
@@ -39,6 +42,7 @@ public class Rules {
 		
 		//for really large maps
 		System.out.println("final analysis:");
+		System.out.println("Map size: " + Main.row + "x" + Main.col + "\n" + "Type of rule used to search: Rule " + Main.ans);
 		printStatementsOne(numSearches, nextCell.row, nextCell.col, result, nextCell);
 		//return map;
 	}
@@ -141,9 +145,8 @@ public class Rules {
 		return list;
 	}
 	
-	//incomplete --> Question 4: 
-	public static Cell questionFour(Cell[][] map) {
-		Cell nextCell = map[0][0];
+	//Question 4: 
+	public static Cell questionFour(Cell[][] map, Cell nextCell) {
 		Cell desiredCell = map[0][0];
 		Cell maxNeighbor = map[0][0];
 		double numSpacesAway = 0;
@@ -152,10 +155,10 @@ public class Rules {
 		//find the next cell to be searched 
 		desiredCell = Rules.ruleOne(map);	//or Rules.ruleTwo(map); or Rules.ourRule(map);
 		maxNeighbor = highestCurrBel(nextCell);
-		numSpacesAway = Math.abs((desiredCell.col-nextCell.col) + (desiredCell.row-nextCell.row));
+		numSpacesAway = Math.abs(desiredCell.col-nextCell.col) + Math.abs(desiredCell.row-nextCell.row);
 		costOfMovement = numSpacesAway / ((Main.row + Main.col)-2);
 		
-		if (costOfMovement > desiredCell.currentBelief) {	//ERROR???
+		if (costOfMovement > Math.abs(desiredCell.currentBelief - maxNeighbor.currentBelief)) {	
 			nextCell = maxNeighbor;
 		} else {
 			nextCell = desiredCell;

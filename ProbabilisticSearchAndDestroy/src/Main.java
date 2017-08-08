@@ -52,4 +52,27 @@ public class Main {
 			Rules.findCellToSearch(map);
 		} while (!"q".equals(ans));
 	}
+	
+	//returns a new map
+	/*public static Cell[][] makeNewMap() {
+		Cell cell = new Cell(0,0,false,false,false,false,false,"-",0,0,0,0,0);
+		Cell[][] newMap = new Cell[row][col];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				newMap[i][j] = cell;
+				newMap[i][j].row = i;
+				newMap[i][j].col = j;
+				newMap[i][j].target = map[i][j].target;
+				newMap[i][j].status = map[i][j].status;
+				newMap[i][j].priorBelief = (double)1 / (double)(row*col);
+				newMap[i][j].currentBelief = newMap[i][j].priorBelief;
+				newMap[i][j].timesSearched = 0;
+				newMap[i][j].falsePositive = 0;
+				newMap[i][j].falseNegative = map[i][j].falseNegative;
+			}
+		}
+		//assign neighbors
+		newMap = Neighbors.assignNeighbors(newMap);
+		return newMap;
+	}*/
 }
